@@ -1,0 +1,142 @@
+{
+  "selectLanguage": "भाषा निवडा",
+  "chooseLanguage": "तुमची पसंतीची भाषा निवडा",
+  "subtitle": "Swastya वापरण्यासाठी भाषा निवडा",
+
+  "english": "इंग्रजी",
+  "englishSub": "जागतिक डीफॉल्ट",
+
+  "hindi": "हिंदी",
+  "hindiSub": "हिंदीमध्ये पुढे जा",
+
+  "marathi": "मराठी",
+  "marathiSub": "मराठी मध्ये सुरु ठेवा",
+
+  "continue": "पुढे जा",
+  "welcome": "नमस्कार, Swastya मध्ये स्वागत आहे",
+  "whoAreYou": "तुम्ही कोण आहात?",
+  "selectRole": "कृपया पुढे जाण्यासाठी तुमची भूमिका निवडा",
+
+  "citizen": "स्थानिक नागरिक",
+  "citizenSub": "सार्वजनिक आरोग्य सेवा",
+
+  "asha": "आशा कार्यकर्ती",
+  "ashaSub": "समुदाय भेटी",
+
+  "anganwadi": "अंगणवाडी",
+  "anganwadiSub": "बाल व मातृ काळजी",
+
+  "phc": "PHC डॉक्टर",
+  "phcSub": "अधिकृत डॉक्टर",
+
+  "infoText": "सुरू करण्यासाठी तुमची भूमिका निवडा. खात्री नसल्यास स्थानिक नागरिक निवडा किंवा हेल्पलाइनला कॉल करा.",
+
+  "welcomeBack": "पुन्हा स्वागत आहे",
+  "loginSubtitle": "Swastya आरोग्य सेवा सुरू ठेवण्यासाठी तुमचा फोन नंबर टाका.",
+  "phoneNumber": "फोन नंबर",
+  "sendOtp": "ओटीपी पाठवा",
+  "newToSwastya": "Swastya मध्ये नवीन आहात?",
+  "createAccount": "खाते तयार करा",
+  "terms": "पुढे चालू ठेवल्यास तुम्ही Swastya च्या सेवा अटी आणि गोपनीयता धोरणास सहमती देता.",
+  "loginAs": "या भूमिकेत लॉगिन",
+
+  "verifyPhone": "फोन सत्यापित करा",
+  "otpSubtitle": "पाठवलेला 6 अंकी कोड टाका",
+  "verifyContinue": "सत्यापित करा आणि पुढे जा",
+  "didntReceive": "कोड मिळाला नाही?",
+  "resendCode": "कोड पुन्हा पाठवा",
+  "profileSetup": "प्रोफाइल सेटअप",
+  "personalInfo": "वैयक्तिक माहिती",
+  "profileSubtitle": "तुमचा अनुभव वैयक्तिक करण्यासाठी तुमच्याबद्दल थोडी माहिती द्या.",
+  "fullName": "पूर्ण नाव",
+  "enterName": "तुमचे नाव टाका",
+  "age": "वय",
+  "enterAge": "तुमचे वय टाका",
+  "gender": "लिंग",
+  "male": "पुरुष",
+  "female": "स्त्री",
+  "other": "इतर",
+  "location": "स्थान",
+  "cityDistrict": "सध्याचे शहर/जिल्हा",
+  "urban": "शहरी",
+  "rural": "ग्रामीण",
+  "healthConditions": "आरोग्य स्थिती",
+  "addNew": "+ नवीन जोडा",
+  "saveContinue": "जतन करा आणि पुढे जा",
+
+  "goodMorning": "शुभ सकाळ",
+  "sosEmergency": "SOS आपत्कालीन",
+  "immediateHelp": "तात्काळ वैद्यकीय मदत",
+
+  "symptomChecker": "लक्षण तपासणी",
+  "aiDiagnosis": "AI आधारित निदान",
+
+  "telemedicine": "टेलिमेडिसिन",
+  "consultDoctors": "डॉक्टरांशी सल्लामसलत",
+
+  "healthRecords": "आरोग्य नोंदी",
+  "accessHistory": "तुमचा वैद्यकीय इतिहास पाहा",
+
+  "nearbyClinics": "जवळचे दवाखाने",
+  "findCare": "स्थानिक उपचार शोधा",
+
+  "healthTips": "आरोग्य टिप्स",
+  "tipsSubtitle": "तुम्हाला तंदुरुस्त आणि सक्रिय ठेवण्यासाठी दररोजचे मार्गदर्शन.",
+  "todayTip": "आजची टिप: १५ मिनिटांच्या चालण्याची ताकद.",
+  "readMore": "अधिक वाचा",
+
+  "upcoming": "आगामी",
+  "tomorrow": "उद्या",
+
+  "records": "नोंदी",
+  "alerts": "सूचना",
+  "profile": "प्रोफाइल",
+  "home": "होम",
+  "joinSwastya": "Swastya मध्ये सामील व्हा",
+  "createAccountSubtitle": "तुमचा आरोग्य प्रवास सुरू करण्यासाठी कृपया तुमची माहिती भरा.",
+  "enterFullName": "तुमचे पूर्ण नाव टाका",
+  "dob": "जन्मतारीख",
+  "agreeTerms": "खाते तयार करून तुम्ही आमच्या",
+  "termsService": "सेवा अटी",
+  "privacyPolicy": "गोपनीयता धोरण",
+  "createAccountBtn": "खाते तयार करा",
+  "alreadyAccount": "आधीच खाते आहे का?",
+  "signIn": "साइन इन",
+  "selectDate": "तुमची जन्मतारीख निवडा",
+
+  "emergencySOS": "आपत्कालीन SOS",
+  "helpOnWay": "मदत मार्गावर आहे",
+  "servicesNotified": "आपत्कालीन सेवा आणि संपर्कांना कळवले आहे",
+  "currentLocation": "सध्याचे स्थान",
+  "liveGps": "लाईव्ह GPS",
+  "contactsNotified": "आपत्कालीन संपर्कांना कळवले",
+  "ambulance": "स्थानिक रुग्णवाहिका",
+  "dispatching": "पाठवले जात आहे...",
+  "sent": "पाठवले",
+  "active": "सक्रिय",
+  "health": "आरोग्य",
+  "sos": "SOS",
+  "howFeeling": "तुम्हाला कसे वाटत आहे?",
+  "symptomSubtitle": "आज तुम्हाला जाणवणारी सर्व लक्षणे निवडा जेणेकरून त्वरीत आरोग्य तपासणी करता येईल.",
+
+  "fever": "ताप किंवा थंडी वाजणे",
+  "cough": "कोरडा खोकला",
+  "aches": "स्नायू किंवा शरीर दुखणे",
+  "throat": "घसा खवखवणे",
+  "breath": "श्वास घेण्यास त्रास",
+  "fatigue": "थकवा",
+
+  "assessmentResult": "तपासणी निकाल",
+  "analysisPlaceholder": "तुम्ही लक्षणे सबमिट केल्यानंतर तुमचे प्राथमिक आरोग्य विश्लेषण येथे दिसेल.",
+
+  "analyzeSymptoms": "लक्षणांचे विश्लेषण करा",
+
+  "nearbyHealthcare": "जवळील आरोग्य सेवा",
+  "searchHealthcare": "PHC, रुग्णालय शोधा...",
+  "all": "सर्व",
+  "hospitals": "रुग्णालये",
+  "phcs": "PHC",
+  "primaryHealthCentre": "प्राथमिक आरोग्य केंद्र",
+  "open247": "२४/७ खुले",
+  "navigate": "मार्गदर्शन"
+}
