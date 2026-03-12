@@ -135,5 +135,49 @@
   "phcs": "PHCs",
   "primaryHealthCentre": "PRIMARY HEALTH CENTRE",
   "open247": "Open 24/7",
-  "navigate": "Navigate"
+  "navigate": "Navigate",
+
+  "swastyaReminders": "Swastya Reminders",
+  "history": "History",
+  "schedules": "Schedules",
+
+  "today": "Today",
+
+  "tomorrowOutlook": "Tomorrow's Outlook",
+  "reminderCount": "You have {{count}} reminders scheduled.",
+
+  "addReminder": "Add Reminder",
+  "medicineName": "Medicine Name",
+  "timePlaceholder": "Time (e.g. 08:00 AM)",
+
+  "cancel": "Cancel",
+  "save": "Save",
+
+  "consultExperts": "Consult Experts",
+  "consultSubtitle": "Get instant medical advice from top-rated specialists",
+
+  "allDoctors": "All Doctors",
+  "general": "General",
+  "pediatric": "Pediatric",
+
+  "videoCall": "Video Call",
+  "offline": "Offline",
+  "shareHealthCard": "Share Your Health Card",
+  "shareHealthText": "Scan to grant temporary access to your medical history",
+  "viewQr": "View QR Code",
+
+  "medicalHistory": "Medical History",
+  "prescriptions": "Prescriptions",
+  "reports": "Reports",
+  "vaccines": "Vaccines",
+
+  "recentCheckups": "Recent Checkups",
+  "viewAll": "View All",
+
+  "generalConsultation": "General Consultation",
+  "bloodWork": "Blood Work Analysis",
+  "downloadPdf": "Download PDF",
+
+  "haveNewReport": "Have a new report?",
+  "uploadRecord": "Upload Record"
 }

@@ -1,5 +1,6 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ScrollView,
@@ -14,10 +15,11 @@ export default function HomeScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
+  const [expanded, setExpanded] = useState(false);
+
   const Card = ({ icon, title, subtitle, bg, onPress }) => (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <View style={[styles.iconBox, { backgroundColor: bg }]}>{icon}</View>
-
       <Text style={styles.cardTitle}>{title}</Text>
       <Text style={styles.cardSub}>{subtitle}</Text>
     </TouchableOpacity>
@@ -30,7 +32,12 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <Text style={styles.logoText}>Swastya</Text>
 
-          <Ionicons name="notifications-outline" size={24} color="#0F172A" />
+          <Ionicons
+            name="notifications-outline"
+            size={24}
+            color="#0F172A"
+            onPress={() => navigation.navigate("Reminders")}
+          />
         </View>
 
         {/* GREETING */}
@@ -75,13 +82,15 @@ export default function HomeScreen() {
             title={t("telemedicine")}
             subtitle={t("consultDoctors")}
             bg="#F3E8FF"
+            onPress={() => navigation.navigate("ConsultDoctor")}
           />
 
           <Card
             icon={<Ionicons name="document-text" size={26} color="#22C55E" />}
-            title={t("healthRecords")}
-            subtitle={t("accessHistory")}
+            title={t("Appointment Booking")}
+            subtitle={t("scheduleVisits")}
             bg="#ECFDF5"
+            onPress={() => navigation.navigate("AppointmentBookingList")}
           />
 
           <Card
@@ -98,11 +107,23 @@ export default function HomeScreen() {
           <Text style={styles.tipsTitle}>{t("healthTips")}</Text>
 
           <Text style={styles.tipsText}>{t("tipsSubtitle")}</Text>
-
           <Text style={styles.tipsText}>{t("todayTip")}</Text>
 
-          <TouchableOpacity style={styles.readBtn}>
-            <Text style={styles.readText}>{t("readMore")}</Text>
+          {expanded && (
+            <Text style={styles.moreTips}>
+              Walking for just 15 minutes daily improves heart health, boosts
+              mood, strengthens muscles, and helps maintain a healthy weight.
+              Try walking after meals or during breaks.
+            </Text>
+          )}
+
+          <TouchableOpacity
+            style={styles.readBtn}
+            onPress={() => setExpanded(!expanded)}
+          >
+            <Text style={styles.readText}>
+              {expanded ? "READ LESS" : t("readMore")}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -112,12 +133,10 @@ export default function HomeScreen() {
         <View style={styles.appointmentCard}>
           <View>
             <Text style={styles.docName}>Dr. Sarah Jenkins</Text>
-
             <Text style={styles.docSpecial}>Cardiology Specialist</Text>
 
             <View style={styles.timeRow}>
               <Ionicons name="time" size={16} color="#06B6D4" />
-
               <Text style={styles.timeText}> {t("tomorrow")}, 10:30 AM</Text>
             </View>
           </View>
@@ -132,17 +151,32 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.navItem}>
-          <Ionicons name="folder" size={24} color="#94A3B8" />
+          <Ionicons
+            name="folder"
+            size={24}
+            color="#94A3B8"
+            onPress={() => navigation.navigate("HealthRecords")}
+          />
           <Text style={styles.navText}>{t("records")}</Text>
         </View>
 
         <View style={styles.navItem}>
-          <Ionicons name="notifications" size={24} color="#94A3B8" />
+          <Ionicons
+            name="notifications"
+            size={24}
+            color="#94A3B8"
+            onPress={() => navigation.navigate("AlertsScreen")}
+          />
           <Text style={styles.navText}>{t("alerts")}</Text>
         </View>
 
         <View style={styles.navItem}>
-          <Ionicons name="person" size={24} color="#94A3B8" />
+          <Ionicons
+            name="person"
+            size={24}
+            color="#94A3B8"
+            onPress={() => navigation.navigate("Profile")}
+          />
           <Text style={styles.navText}>{t("profile")}</Text>
         </View>
       </View>
@@ -336,5 +370,10 @@ const styles = StyleSheet.create({
   navText: {
     color: "#94A3B8",
     fontSize: 12,
+  },
+  moreTips: {
+    color: "#E2E8F0",
+    marginTop: 10,
+    lineHeight: 20,
   },
 });

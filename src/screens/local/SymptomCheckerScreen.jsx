@@ -1,87 +1,58 @@
-import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SymptomCheckerScreen() {
   const navigation = useNavigation();
-  const { t } = useTranslation();
 
-  const [selected, setSelected] = useState([]);
+  const [symptomName, setSymptomName] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [symptoms, setSymptoms] = useState([]);
 
-  const symptoms = [
-    {
-      id: "fever",
-      icon: <FontAwesome5 name="thermometer-half" size={18} color="#F97316" />,
-      bg: "#FEF3C7",
-    },
-    {
-      id: "cough",
-      icon: <FontAwesome5 name="wind" size={18} color="#3B82F6" />,
-      bg: "#DBEAFE",
-    },
-    {
-      id: "aches",
-      icon: <FontAwesome5 name="running" size={18} color="#EF4444" />,
-      bg: "#FEE2E2",
-    },
-    {
-      id: "throat",
-      icon: (
-        <MaterialIcons name="record-voice-over" size={20} color="#8B5CF6" />
-      ),
-      bg: "#F3E8FF",
-    },
-    {
-      id: "breath",
-      icon: <FontAwesome5 name="lungs" size={18} color="#06B6D4" />,
-      bg: "#E0F2FE",
-    },
-    {
-      id: "fatigue",
-      icon: <MaterialIcons name="bedtime" size={20} color="#F59E0B" />,
-      bg: "#FEF9C3",
-    },
-  ];
+  const addSymptom = () => {
+    if (!symptomName) return;
 
-  const toggleSymptom = (id) => {
-    if (selected.includes(id)) {
-      setSelected(selected.filter((item) => item !== id));
-    } else {
-      setSelected([...selected, id]);
-    }
+    const newSymptom = {
+      id: Date.now(),
+      name: symptomName,
+      severity: severity,
+      showAI: false,
+      solution: "",
+    };
+
+    setSymptoms([...symptoms, newSymptom]);
+    setSymptomName("");
+    setSeverity("");
   };
 
-  const SymptomCard = ({ item }) => {
-    const active = selected.includes(item.id);
+  const generateSolution = (item) => {
+    let solution = "";
 
-    return (
-      <TouchableOpacity
-        style={[styles.card, active && styles.cardActive]}
-        onPress={() => toggleSymptom(item.id)}
-      >
-        <View style={[styles.iconBox, { backgroundColor: item.bg }]}>
-          {item.icon}
-        </View>
+    const name = item.name.toLowerCase();
 
-        <Text style={styles.symptomText}>{t(item.id)}</Text>
+    if (name.includes("fever")) {
+      solution = "Drink fluids, rest well and monitor temperature.";
+    } else if (name.includes("cough")) {
+      solution = "Stay hydrated and use warm fluids or honey.";
+    } else if (name.includes("headache")) {
+      solution = "Rest in a quiet place and stay hydrated.";
+    } else {
+      solution = "Monitor symptoms and consult a doctor if condition worsens.";
+    }
 
-        {active ? (
-          <View style={styles.checkedBox}>
-            <Ionicons name="checkmark" size={16} color="#fff" />
-          </View>
-        ) : (
-          <View style={styles.checkbox} />
-        )}
-      </TouchableOpacity>
+    setSymptoms(
+      symptoms.map((sym) =>
+        sym.id === item.id ? { ...sym, showAI: true, solution: solution } : sym,
+      ),
     );
   };
 
@@ -91,44 +62,65 @@ export default function SymptomCheckerScreen() {
         {/* HEADER */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#0F172A" />
+            <Ionicons name="arrow-back" size={24} />
           </TouchableOpacity>
 
-          <Text style={styles.headerTitle}>{t("symptomChecker")}</Text>
+          <Text style={styles.headerTitle}>Symptom Checker</Text>
 
-          <Ionicons
-            name="information-circle-outline"
-            size={22}
-            color="#0F172A"
-          />
+          <Ionicons name="information-circle-outline" size={22} />
         </View>
 
         {/* TITLE */}
-        <Text style={styles.title}>{t("howFeeling")}</Text>
+        <Text style={styles.title}>How are you feeling?</Text>
+        <Text style={styles.subtitle}>
+          Enter your symptoms for quick analysis
+        </Text>
 
-        <Text style={styles.subtitle}>{t("symptomSubtitle")}</Text>
+        {/* INPUT SYMPTOM */}
+        <TextInput
+          style={styles.input}
+          placeholder="Symptom name (example: fever)"
+          value={symptomName}
+          onChangeText={setSymptomName}
+        />
 
-        {/* SYMPTOMS */}
-        {symptoms.map((item) => (
-          <SymptomCard key={item.id} item={item} />
-        ))}
+        {/* INPUT SEVERITY */}
+        <TextInput
+          style={styles.input}
+          placeholder="Severity (Low / Medium / High)"
+          value={severity}
+          onChangeText={setSeverity}
+        />
 
-        {/* RESULT BOX */}
-        <View style={styles.resultBox}>
-          <View style={styles.resultIcon}>
-            <Ionicons name="bar-chart" size={24} color="#06B6D4" />
-          </View>
-
-          <Text style={styles.resultTitle}>{t("assessmentResult")}</Text>
-
-          <Text style={styles.resultText}>{t("analysisPlaceholder")}</Text>
-        </View>
-
-        {/* BUTTON */}
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>{t("analyzeSymptoms")}</Text>
-          <Ionicons name="arrow-forward" size={20} color="#0F172A" />
+        {/* ADD BUTTON */}
+        <TouchableOpacity style={styles.button} onPress={addSymptom}>
+          <Text style={styles.buttonText}>Add Symptom</Text>
         </TouchableOpacity>
+
+        {/* LIST OF ADDED SYMPTOMS */}
+        {symptoms.map((item) => (
+          <View key={item.id} style={styles.symptomCard}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.symptomTitle}>{item.name}</Text>
+              <Text style={styles.symptomSeverity}>
+                Severity: {item.severity}
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.aiButton}
+              onPress={() => generateSolution(item)}
+            >
+              <Text style={styles.aiText}>AI</Text>
+            </TouchableOpacity>
+
+            {item.showAI && (
+              <View style={styles.solutionBox}>
+                <Text style={styles.solutionText}>{item.solution}</Text>
+              </View>
+            )}
+          </View>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -143,8 +135,8 @@ const styles = StyleSheet.create({
 
   header: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
     marginTop: 10,
   },
 
@@ -154,7 +146,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "700",
     marginTop: 20,
   },
@@ -165,96 +157,65 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
+  input: {
     backgroundColor: "#fff",
-    padding: 18,
-    borderRadius: 16,
+    padding: 14,
+    borderRadius: 12,
     marginBottom: 12,
-  },
-
-  cardActive: {
-    borderWidth: 2,
-    borderColor: "#06B6D4",
-  },
-
-  iconBox: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-  },
-
-  symptomText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-
-  checkbox: {
-    width: 22,
-    height: 22,
-    borderWidth: 2,
-    borderColor: "#06B6D4",
-    borderRadius: 6,
-  },
-
-  checkedBox: {
-    width: 22,
-    height: 22,
-    backgroundColor: "#06B6D4",
-    borderRadius: 6,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  resultBox: {
-    marginTop: 10,
-    borderWidth: 2,
-    borderStyle: "dashed",
-    borderColor: "#BEE3F8",
-    padding: 20,
-    borderRadius: 16,
-    alignItems: "center",
-  },
-
-  resultIcon: {
-    width: 60,
-    height: 60,
-    backgroundColor: "#E0F2FE",
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-
-  resultTitle: {
-    fontWeight: "700",
-    fontSize: 18,
-  },
-
-  resultText: {
-    textAlign: "center",
-    color: "#64748B",
-    marginTop: 6,
   },
 
   button: {
     backgroundColor: "#1CC4E9",
-    padding: 18,
+    padding: 16,
     borderRadius: 14,
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
+    marginBottom: 20,
   },
 
   buttonText: {
+    fontWeight: "600",
+    fontSize: 16,
+  },
+
+  symptomCard: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 14,
+    marginBottom: 12,
+  },
+
+  symptomTitle: {
     fontSize: 16,
     fontWeight: "600",
-    marginRight: 8,
+  },
+
+  symptomSeverity: {
+    color: "#64748B",
+    marginTop: 3,
+  },
+
+  aiButton: {
+    backgroundColor: "#06B6D4",
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+    marginTop: 10,
+  },
+
+  aiText: {
+    color: "#fff",
+    fontWeight: "600",
+  },
+
+  solutionBox: {
+    backgroundColor: "#E0F2FE",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+
+  solutionText: {
+    color: "#0369A1",
   },
 });

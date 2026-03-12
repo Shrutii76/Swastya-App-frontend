@@ -1,5 +1,7 @@
 import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,10 +10,20 @@ export default function RoleSelectionScreen() {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const handleRoleSelect = useCallback(async (role) => {
+    try {
+      await AsyncStorage.setItem("role", role);
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log("Error saving role:", error);
+    }
+  }, []);
+
   const RoleCard = ({ icon, title, subtitle, bgColor, role }) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate("Login", { role })}
+      activeOpacity={0.85}
+      onPress={() => handleRoleSelect(role)}
     >
       <View style={[styles.iconCircle, { backgroundColor: bgColor }]}>
         {icon}
@@ -24,7 +36,7 @@ export default function RoleSelectionScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Logo Section */}
+      {/* Logo */}
       <View style={styles.logoContainer}>
         <View style={styles.logoCircle}>
           <Ionicons name="shield-checkmark" size={28} color="#06B6D4" />
@@ -38,7 +50,7 @@ export default function RoleSelectionScreen() {
       <Text style={styles.heading}>{t("whoAreYou")}</Text>
       <Text style={styles.subHeading}>{t("selectRole")}</Text>
 
-      {/* Role Grid */}
+      {/* Role Cards */}
       <View style={styles.grid}>
         <RoleCard
           role="citizen"
@@ -75,10 +87,9 @@ export default function RoleSelectionScreen() {
         />
       </View>
 
-      {/* Info Box */}
+      {/* Info */}
       <View style={styles.infoBox}>
         <Ionicons name="information-circle" size={20} color="#06B6D4" />
-
         <Text style={styles.infoText}>{t("infoText")}</Text>
       </View>
     </SafeAreaView>
@@ -188,30 +199,5 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: "#334155",
     fontSize: 14,
-  },
-
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 14,
-    borderTopWidth: 1,
-    borderColor: "#E2E8F0",
-    marginTop: 20,
-  },
-
-  navItem: {
-    alignItems: "center",
-  },
-
-  navActive: {
-    color: "#06B6D4",
-    fontSize: 12,
-    marginTop: 4,
-  },
-
-  navText: {
-    color: "#94A3B8",
-    fontSize: 12,
-    marginTop: 4,
   },
 });

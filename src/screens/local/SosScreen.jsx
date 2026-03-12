@@ -4,12 +4,14 @@ import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-    Animated,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Animated,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,7 +20,15 @@ export default function SosScreen() {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const pulse = useRef(new Animated.Value(1)).current;
+
   const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState("");
+  const [symptoms, setSymptoms] = useState("");
+  const [severity, setSeverity] = useState("Moderate");
+  const [dispatchStatus, setDispatchStatus] = useState("Waiting");
+  const [firstAid, setFirstAid] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const startSOSAnimation = () => {
     Animated.loop(
@@ -37,6 +47,39 @@ export default function SosScreen() {
     ).start();
   };
 
+  const generateFirstAid = () => {
+    const s = symptoms.toLowerCase();
+
+    if (s.includes("chest")) {
+      setFirstAid(
+        "Keep the patient calm and seated. Loosen tight clothing and call emergency services immediately.",
+      );
+    } else if (s.includes("bleeding")) {
+      setFirstAid(
+        "Apply firm pressure to the wound with clean cloth and elevate the injured area.",
+      );
+    } else if (s.includes("breathing")) {
+      setFirstAid(
+        "Help the patient sit upright and ensure fresh air while waiting for ambulance.",
+      );
+    } else {
+      setFirstAid(
+        "Stay calm and monitor the patient until emergency responders arrive.",
+      );
+    }
+  };
+
+  const handleSOS = () => {
+    startSOSAnimation();
+    setShowForm(true);
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setDispatchStatus("Ambulance Dispatched - Driver on the way");
+    generateFirstAid();
+  };
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -47,10 +90,25 @@ export default function SosScreen() {
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
-
       setLocation(currentLocation.coords);
+
+      const reverse = await Location.reverseGeocodeAsync({
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+      });
+
+      if (reverse.length > 0) {
+        const place = reverse[0];
+        setAddress(
+          `${place.name || ""} ${place.street || ""}, ${place.city || ""}`,
+        );
+      }
     })();
   }, []);
+
+  const callNumber = (number) => {
+    Linking.openURL(`tel:${number}`);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,7 +126,6 @@ export default function SosScreen() {
 
         {/* TITLE */}
         <Text style={styles.alertTitle}>{t("helpOnWay")}</Text>
-
         <Text style={styles.subtitle}>{t("servicesNotified")}</Text>
 
         {/* SOS BUTTON */}
@@ -86,22 +143,14 @@ export default function SosScreen() {
             ]}
           />
 
-          <TouchableOpacity
-            style={styles.sosButton}
-            onPress={startSOSAnimation}
-          >
+          <TouchableOpacity style={styles.sosButton} onPress={handleSOS}>
             <Text style={styles.sosText}>SOS</Text>
           </TouchableOpacity>
         </View>
 
-        {/* LOCATION HEADER */}
-        <View style={styles.locationHeader}>
-          <Text style={styles.locationTitle}>{t("currentLocation")}</Text>
-
-          <View style={styles.gpsBadge}>
-            <Text style={styles.gpsText}>{t("liveGps")}</Text>
-          </View>
-        </View>
+        {/* LOCATION */}
+        <Text style={styles.sectionTitle}>Detected Location</Text>
+        <TextInput style={styles.input} value={address} editable={false} />
 
         {/* MAP */}
         {location && (
@@ -123,10 +172,59 @@ export default function SosScreen() {
           </MapView>
         )}
 
-        {/* CONTACTS TITLE */}
+        {/* INPUT FORM */}
+        {showForm && !submitted && (
+          <>
+            <Text style={styles.sectionTitle}>Symptoms</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Describe symptoms..."
+              value={symptoms}
+              onChangeText={setSymptoms}
+            />
+
+            <Text style={styles.sectionTitle}>Emergency Level</Text>
+
+            <View style={styles.severityRow}>
+              {["Low", "Moderate", "Critical"].map((item) => (
+                <TouchableOpacity
+                  key={item}
+                  style={[
+                    styles.severityBtn,
+                    severity === item && styles.activeSeverity,
+                  ]}
+                  onPress={() => setSeverity(item)}
+                >
+                  <Text>{item}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
+              <Text style={styles.submitText}>Submit Emergency</Text>
+            </TouchableOpacity>
+          </>
+        )}
+
+        {/* STATUS AFTER SUBMIT */}
+        {submitted && (
+          <>
+            <View style={styles.dispatchCard}>
+              <Text style={styles.dispatchTitle}>Ambulance Status</Text>
+              <Text style={styles.dispatchStatus}>{dispatchStatus}</Text>
+            </View>
+
+            <View style={styles.firstAidBox}>
+              <Text style={styles.firstAidTitle}>First Aid Instructions</Text>
+              <Text>{firstAid}</Text>
+            </View>
+          </>
+        )}
+
+        {/* CONTACTS */}
         <Text style={styles.contactTitle}>{t("contactsNotified")}</Text>
 
-        {/* CONTACT CARD */}
         <View style={styles.contactCard}>
           <View style={styles.avatar}>
             <Ionicons name="person" size={22} color="#06B6D4" />
@@ -137,55 +235,26 @@ export default function SosScreen() {
             <Text style={styles.contactPhone}>+91 98765 43210</Text>
           </View>
 
-          <View style={styles.sentBadge}>
-            <Text style={styles.sentText}>{t("sent")}</Text>
-          </View>
-
-          <Ionicons name="call" size={20} color="#06B6D4" />
+          <TouchableOpacity onPress={() => callNumber("9876543210")}>
+            <Ionicons name="call" size={22} color="#06B6D4" />
+          </TouchableOpacity>
         </View>
 
-        {/* AMBULANCE */}
         <View style={styles.contactCard}>
           <View style={styles.avatar}>
-            <Ionicons name="person" size={22} color="#06B6D4" />
+            <Ionicons name="car" size={22} color="#06B6D4" />
           </View>
 
           <View style={{ flex: 1 }}>
             <Text style={styles.contactName}>{t("ambulance")}</Text>
-
-            <Text style={styles.contactPhone}>{t("dispatching")}</Text>
+            <Text style={styles.contactPhone}>{dispatchStatus}</Text>
           </View>
 
-          <View style={styles.activeBadge}>
-            <Text style={styles.activeText}>{t("active")}</Text>
-          </View>
-
-          <Ionicons name="call" size={20} color="#06B6D4" />
+          <TouchableOpacity onPress={() => callNumber("102")}>
+            <Ionicons name="call" size={22} color="#06B6D4" />
+          </TouchableOpacity>
         </View>
       </ScrollView>
-
-      {/* BOTTOM NAV */}
-      <View style={styles.bottomNav}>
-        <View style={styles.navItem}>
-          <Ionicons name="home" size={24} color="#06B6D4" />
-          <Text style={styles.navActive}>{t("home")}</Text>
-        </View>
-
-        <View style={styles.navItem}>
-          <Ionicons name="folder" size={24} color="#94A3B8" />
-          <Text style={styles.navText}>{t("records")}</Text>
-        </View>
-
-        <View style={styles.navItem}>
-          <Ionicons name="notifications" size={24} color="#94A3B8" />
-          <Text style={styles.navText}>{t("alerts")}</Text>
-        </View>
-
-        <View style={styles.navItem}>
-          <Ionicons name="person" size={24} color="#94A3B8" />
-          <Text style={styles.navText}>{t("profile")}</Text>
-        </View>
-      </View>
     </SafeAreaView>
   );
 }
@@ -224,51 +293,39 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
-  sosOuter: {
+  /* SOS BUTTON */
+
+  sosContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 30,
   },
 
-  sosInner: {
+  outerRing: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: "rgba(239,68,68,0.3)",
+  },
+
+  sosButton: {
     width: 160,
     height: 160,
-    backgroundColor: "#EF4444",
     borderRadius: 80,
+    backgroundColor: "#EF4444",
     alignItems: "center",
     justifyContent: "center",
+    elevation: 10,
   },
 
   sosText: {
     color: "#fff",
-    fontSize: 24,
-    fontWeight: "700",
-    marginTop: 6,
+    fontSize: 28,
+    fontWeight: "bold",
   },
 
-  locationHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-
-  locationTitle: {
-    fontWeight: "700",
-    color: "#64748B",
-  },
-
-  gpsBadge: {
-    backgroundColor: "#E0F2FE",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-
-  gpsText: {
-    color: "#0284C7",
-    fontSize: 12,
-  },
+  /* LOCATION */
 
   map: {
     width: "100%",
@@ -276,6 +333,89 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: 20,
   },
+
+  sectionTitle: {
+    fontWeight: "700",
+    marginBottom: 6,
+    marginTop: 10,
+    color: "#64748B",
+  },
+
+  input: {
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  /* SEVERITY */
+
+  severityRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  severityBtn: {
+    backgroundColor: "#E2E8F0",
+    padding: 10,
+    borderRadius: 10,
+    width: "30%",
+    alignItems: "center",
+  },
+
+  activeSeverity: {
+    backgroundColor: "#FCA5A5",
+  },
+
+  /* SUBMIT BUTTON */
+
+  submitBtn: {
+    backgroundColor: "#EF4444",
+    padding: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+  },
+
+  submitText: {
+    color: "#fff",
+    fontWeight: "700",
+  },
+
+  /* DISPATCH STATUS */
+
+  dispatchCard: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 15,
+  },
+
+  dispatchTitle: {
+    fontWeight: "700",
+  },
+
+  dispatchStatus: {
+    color: "#EF4444",
+    marginTop: 4,
+  },
+
+  /* FIRST AID */
+
+  firstAidBox: {
+    backgroundColor: "#FEF3C7",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  firstAidTitle: {
+    fontWeight: "700",
+    marginBottom: 5,
+  },
+
+  /* CONTACTS */
 
   contactTitle: {
     fontWeight: "700",
@@ -336,6 +476,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+  /* OPTIONAL BOTTOM NAV */
+
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -356,34 +498,5 @@ const styles = StyleSheet.create({
   navActive: {
     color: "#EF4444",
     fontSize: 12,
-  },
-  sosContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 30,
-  },
-
-  outerRing: {
-    position: "absolute",
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: "rgba(239,68,68,0.3)",
-  },
-
-  sosButton: {
-    width: 160,
-    height: 160,
-    borderRadius: 80,
-    backgroundColor: "#EF4444",
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 10,
-  },
-
-  sosText: {
-    color: "#fff",
-    fontSize: 28,
-    fontWeight: "bold",
   },
 });

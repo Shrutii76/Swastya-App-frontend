@@ -138,5 +138,50 @@
   "phcs": "PHC",
   "primaryHealthCentre": "प्राथमिक आरोग्य केंद्र",
   "open247": "२४/७ खुले",
-  "navigate": "मार्गदर्शन"
+  "navigate": "मार्गदर्शन",
+
+  "swastyaReminders": "स्वास्थ्य रिमाइंडर",
+
+  "history": "इतिहास",
+  "schedules": "वेळापत्रक",
+
+  "today": "आज",
+
+  "tomorrowOutlook": "उद्याचा आढावा",
+  "reminderCount": "तुमचे {{count}} रिमाइंडर नियोजित आहेत.",
+
+  "addReminder": "रिमाइंडर जोडा",
+  "medicineName": "औषधाचे नाव",
+  "timePlaceholder": "वेळ (उदा. 08:00 AM)",
+
+  "cancel": "रद्द करा",
+  "save": "जतन करा",
+
+  "consultExperts": "तज्ञांचा सल्ला घ्या",
+  "consultSubtitle": "उच्च दर्जाच्या तज्ञांकडून त्वरित वैद्यकीय सल्ला मिळवा",
+
+  "allDoctors": "सर्व डॉक्टर",
+  "general": "सामान्य",
+  "pediatric": "बालरोग",
+
+  "videoCall": "व्हिडिओ कॉल",
+  "offline": "ऑफलाइन",
+  "shareHealthCard": "तुमचा हेल्थ कार्ड शेअर करा",
+  "shareHealthText": "तुमच्या वैद्यकीय इतिहासासाठी तात्पुरती प्रवेश देण्यासाठी स्कॅन करा",
+  "viewQr": "QR कोड पहा",
+
+  "medicalHistory": "वैद्यकीय इतिहास",
+  "prescriptions": "प्रिस्क्रिप्शन",
+  "reports": "रिपोर्ट",
+  "vaccines": "लसी",
+
+  "recentCheckups": "अलीकडील तपासण्या",
+  "viewAll": "सर्व पहा",
+
+  "generalConsultation": "सामान्य सल्लामसलत",
+  "bloodWork": "रक्त तपासणी विश्लेषण",
+  "downloadPdf": "PDF डाउनलोड करा",
+
+  "haveNewReport": "नवीन रिपोर्ट आहे का?",
+  "uploadRecord": "रिपोर्ट अपलोड करा"
 }

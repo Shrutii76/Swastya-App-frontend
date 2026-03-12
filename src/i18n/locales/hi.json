@@ -138,5 +138,49 @@
   "phcs": "PHC",
   "primaryHealthCentre": "प्राथमिक स्वास्थ्य केंद्र",
   "open247": "24/7 खुला",
-  "navigate": "मार्गदर्शन"
+  "navigate": "मार्गदर्शन",
+
+  "swastyaReminders": "स्वास्थ्य रिमाइंडर",
+  "history": "इतिहास",
+  "schedules": "अनुसूची",
+
+  "today": "आज",
+
+  "tomorrowOutlook": "कल का अवलोकन",
+  "reminderCount": "आपके {{count}} रिमाइंडर निर्धारित हैं।",
+
+  "addReminder": "रिमाइंडर जोड़ें",
+  "medicineName": "दवा का नाम",
+  "timePlaceholder": "समय (जैसे 08:00 AM)",
+
+  "cancel": "रद्द करें",
+  "save": "सहेजें",
+
+  "consultExperts": "विशेषज्ञ से परामर्श",
+  "consultSubtitle": "शीर्ष रेटेड विशेषज्ञों से तुरंत चिकित्सा सलाह प्राप्त करें",
+
+  "allDoctors": "सभी डॉक्टर",
+  "general": "सामान्य",
+  "pediatric": "बाल रोग",
+
+  "videoCall": "वीडियो कॉल",
+  "offline": "ऑफलाइन",
+  "shareHealthCard": "अपना हेल्थ कार्ड साझा करें",
+  "shareHealthText": "अपने चिकित्सा इतिहास तक अस्थायी पहुंच देने के लिए स्कैन करें",
+  "viewQr": "QR कोड देखें",
+
+  "medicalHistory": "चिकित्सा इतिहास",
+  "prescriptions": "प्रिस्क्रिप्शन",
+  "reports": "रिपोर्ट",
+  "vaccines": "टीके",
+
+  "recentCheckups": "हाल की जांच",
+  "viewAll": "सभी देखें",
+
+  "generalConsultation": "सामान्य परामर्श",
+  "bloodWork": "ब्लड टेस्ट विश्लेषण",
+  "downloadPdf": "PDF डाउनलोड करें",
+
+  "haveNewReport": "क्या आपके पास नई रिपोर्ट है?",
+  "uploadRecord": "रिकॉर्ड अपलोड करें"
 }

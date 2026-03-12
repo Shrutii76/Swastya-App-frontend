@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,7 +64,16 @@ export default function LoginScreen() {
       {/* Send OTP */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Otp", { role })}
+        onPress={async () => {
+          if (!phone) {
+            alert("Enter phone number");
+            return;
+          }
+
+          await AsyncStorage.setItem("phone", phone);
+
+          navigation.navigate("Otp");
+        }}
       >
         <View style={styles.buttonRow}>
           <Text style={styles.buttonText}>{t("sendOtp")}</Text>
@@ -81,7 +91,7 @@ export default function LoginScreen() {
       {/* Register */}
       <TouchableOpacity
         style={styles.createBtn}
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("Register", { role })}
       >
         <Text style={styles.createText}>{t("createAccount")}</Text>
       </TouchableOpacity>

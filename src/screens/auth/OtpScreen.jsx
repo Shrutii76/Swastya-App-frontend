@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,12 +18,33 @@ export default function OtpScreen() {
   const { t } = useTranslation();
 
   const [otp, setOtp] = useState("");
+  const [role, setRole] = useState("");
+  const [phone, setPhone] = useState("");
+
   const inputRef = useRef(null);
 
+  // Focus input automatically
   useEffect(() => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 400);
+  }, []);
+
+  // Load role + phone from storage
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const storedRole = await AsyncStorage.getItem("role");
+        const storedPhone = await AsyncStorage.getItem("phone");
+
+        if (storedRole) setRole(storedRole);
+        if (storedPhone) setPhone(storedPhone);
+      } catch (error) {
+        console.log("Error loading storage:", error);
+      }
+    };
+
+    loadData();
   }, []);
 
   const focusInput = () => {
@@ -30,6 +52,26 @@ export default function OtpScreen() {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 50);
+  };
+
+  // Role → Screen mapping
+  const roleRoutes = {
+    citizen: "ProfileSetup",
+    phc: "PHCprofileSetup",
+    asha: "ASHAProfileSetup",
+    anganwadi: "AnganwadiProfileSetup",
+  };
+
+  const handleVerify = () => {
+    if (otp.length !== 6) return;
+
+    const screen = roleRoutes[role];
+
+    if (screen) {
+      navigation.replace(screen);
+    } else {
+      console.log("Role not found");
+    }
   };
 
   return (
@@ -50,7 +92,7 @@ export default function OtpScreen() {
         style={styles.hiddenInput}
       />
 
-      {/* Back */}
+      {/* Back Button */}
       <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={25} color="#1F2937" />
       </Pressable>
@@ -60,10 +102,10 @@ export default function OtpScreen() {
 
       <Text style={styles.subtitle}>
         {t("otpSubtitle")}{" "}
-        <Text style={{ fontWeight: "600" }}>+91 XXXXX XXXXX</Text>
+        <Text style={{ fontWeight: "600" }}>{phone || "+91 XXXXX XXXXX"}</Text>
       </Text>
 
-      {/* OTP BOXES */}
+      {/* OTP Boxes */}
       <Pressable style={styles.otpContainer} onPress={focusInput}>
         {[...Array(6)].map((_, index) => (
           <View
@@ -75,11 +117,11 @@ export default function OtpScreen() {
         ))}
       </Pressable>
 
-      {/* Verify */}
+      {/* Verify Button */}
       <Pressable
-        style={styles.verifyBtn}
+        style={[styles.verifyBtn, { opacity: otp.length === 6 ? 1 : 0.5 }]}
         disabled={otp.length !== 6}
-        onPress={() => navigation.navigate("ProfileSetup")}
+        onPress={handleVerify}
       >
         <Text style={styles.verifyText}>{t("verifyContinue")}</Text>
       </Pressable>
@@ -87,9 +129,7 @@ export default function OtpScreen() {
       {/* Resend */}
       <View style={styles.resendContainer}>
         <Text style={styles.resendText}>{t("didntReceive")}</Text>
-
         <Text style={styles.resendLink}>{t("resendCode")}</Text>
-
         <Text style={styles.timer}> | 00:55</Text>
       </View>
     </SafeAreaView>
