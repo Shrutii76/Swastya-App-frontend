@@ -183,5 +183,25 @@
   "downloadPdf": "PDF डाउनलोड करा",
 
   "haveNewReport": "नवीन रिपोर्ट आहे का?",
-  "uploadRecord": "रिपोर्ट अपलोड करा"
+  "uploadRecord": "रिपोर्ट अपलोड करा",
+
+  "welcome_back": "पुन्हा स्वागत आहे",
+  "community_overview": "समुदाय आढावा",
+  "last_updated": "आत्ताच अपडेट केले",
+  "total_households": "एकूण कुटुंबे",
+  "pregnant_women": "गर्भवती महिला",
+  "children_tracked": "मुलांची नोंद",
+  "today_visits": "आजच्या भेटी",
+  "quick_actions": "जलद कृती",
+  "patient_registration": "रुग्ण नोंदणी",
+  "add_family_members": "नवीन कुटुंब सदस्य जोडा",
+  "household_visits": "घरभेटी",
+  "pregnancy_monitoring": "गर्भधारणा निरीक्षण",
+  "vaccination_tracker": "लसीकरण ट्रॅकर",
+  "emergency_alerts": "आपत्कालीन सूचना",
+  "up_next": "पुढे",
+  "home": "मुख्यपृष्ठ",
+  "alerts": "सूचना",
+  "community": "समुदाय",
+  "profile": "प्रोफाइल"
 }

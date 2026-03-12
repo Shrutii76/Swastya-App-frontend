@@ -182,5 +182,37 @@
   "downloadPdf": "PDF डाउनलोड करें",
 
   "haveNewReport": "क्या आपके पास नई रिपोर्ट है?",
-  "uploadRecord": "रिकॉर्ड अपलोड करें"
+  "uploadRecord": "रिकॉर्ड अपलोड करें",
+
+  "welcome_back": "वापसी पर स्वागत है",
+  "community_overview": "समुदाय अवलोकन",
+  "last_updated": "अभी अपडेट किया गया",
+  "total_households": "कुल परिवार",
+  "pregnant_women": "गर्भवती महिलाएं",
+  "children_tracked": "बच्चों की निगरानी",
+  "today_visits": "आज की मुलाकातें",
+  "quick_actions": "त्वरित कार्य",
+  "patient_registration": "मरीज पंजीकरण",
+  "add_family_members": "नए परिवार सदस्य जोड़ें",
+  "household_visits": "घर का दौरा",
+  "pregnancy_monitoring": "गर्भावस्था निगरानी",
+  "vaccination_tracker": "टीकाकरण ट्रैकर",
+  "emergency_alerts": "आपातकालीन अलर्ट",
+  "up_next": "आगे",
+  "home": "होम",
+  "alerts": "अलर्ट",
+  "community": "समुदाय",
+  "profile": "प्रोफाइल",
+  
+  "patientRegistration": "रोगी पंजीकरण",
+  "searchPatients": "नाम या आईडी से खोजें",
+  "all": "सभी",
+  "children": "बच्चे",
+  "geriatric": "वृद्ध",
+  "yearsOld": "वर्ष",
+  "id": "आईडी",
+  "vaccinationDue": "टीकाकरण लंबित: पोलियो बूस्टर",
+  "routineVaccination": "नियमित टीकाकरण जांच",
+  "routineCheck": "नियमित स्वास्थ्य जांच",
+  "highBP": "उच्च रक्तचाप अलर्ट • फॉलोअप आवश्यक"
 }

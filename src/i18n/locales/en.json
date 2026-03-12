@@ -179,5 +179,37 @@
   "downloadPdf": "Download PDF",
 
   "haveNewReport": "Have a new report?",
-  "uploadRecord": "Upload Record"
+  "uploadRecord": "Upload Record",
+
+  "welcome_back": "WELCOME BACK",
+  "community_overview": "Community Overview",
+  "last_updated": "Last updated: Just now",
+  "total_households": "Total Households",
+  "pregnant_women": "Pregnant Women",
+  "children_tracked": "Children Tracked",
+  "today_visits": "Today's Visits",
+  "quick_actions": "Quick Actions",
+  "patient_registration": "Patient Registration",
+  "add_family_members": "Add new family members",
+  "household_visits": "Household Visits",
+  "pregnancy_monitoring": "Pregnancy Monitoring",
+  "vaccination_tracker": "Vaccination Tracker",
+  "emergency_alerts": "Emergency Alerts",
+  "up_next": "Up Next",
+  "home": "HOME",
+  "alerts": "ALERTS",
+  "community": "COMMUNITY",
+  "profile": "PROFILE",
+  
+  "patientRegistration": "Patient Registration",
+  "searchPatients": "Search patients by name or ID",
+  "all": "All",
+  "children": "Children",
+  "geriatric": "Geriatric",
+  "yearsOld": "years old",
+  "id": "ID",
+  "vaccinationDue": "Vaccination Due: Polio Booster",
+  "routineVaccination": "Routine vaccination check",
+  "routineCheck": "Routine health check",
+  "highBP": "High BP alert • Needs Followup"
 }
